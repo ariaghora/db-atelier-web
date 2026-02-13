@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# miscel
+.vscode/
+
+
+#SEOs
+SEO_CHECKLIST.md
