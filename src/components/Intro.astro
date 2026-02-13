@@ -1,0 +1,101 @@
+---
+---
+
+<section class="intro">
+	<h1>A desktop database client</h1>
+	<p>
+		Multiple connections, split panes, tabbed views. A lightweight desktop app
+		for browsing and managing your databases.
+	</p>
+	<div class="intro-buttons">
+		<a id="download-btn" href="#download" class="btn">
+			<svg width="16" height="16" viewBox="0 0 814 1000" fill="currentColor">
+				<path
+					d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.4-155.5-127.4c-58.1-81.1-105-207.4-105-327.5 0-192.8 125.4-295.2 248.8-295.2 65.6 0 120.3 43.1 161.5 43.1 39.1 0 100.1-45.7 174.5-45.7 28.2 0 129.5 2.6 196.3 99.7zM554.1 159.4c31.1-36.9 53.1-88.1 53.1-139.4 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.9 32.4-54.4 83.6-54.4 135.8 0 7.8.6 15.6 1.3 18.2 2.6.6 6.4 1.3 10.2 1.3 45.4 0 103.4-30.4 138.8-71.6z"
+				></path>
+			</svg>
+			Download for macOS (Apple Silicon)
+		</a>
+		<a href="/pricing" class="btn btn-secondary">Pricing</a>
+	</div>
+</section>
+
+<script>
+	fetch("https://cdn.dbatelier.app/releases/latest.json")
+		.then((r) => r.json())
+		.then((data) => {
+			const v = data.version;
+			if (v) {
+				const btn = document.getElementById("download-btn");
+				if (btn) {
+					btn.setAttribute(
+						"href",
+						`https://cdn.dbatelier.app/releases/DB Atelier_${v}_aarch64.dmg`
+					);
+				}
+			}
+		});
+</script>
+
+<style>
+	.intro {
+		text-align: center;
+		max-width: 640px;
+		margin: 72px auto 0;
+		padding: 0 24px;
+	}
+
+	.intro h1 {
+		font-size: 20px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		line-height: 1.4;
+		margin-bottom: 10px;
+	}
+
+	.intro p {
+		font-size: 16px;
+		color: var(--text-muted);
+		margin-bottom: 28px;
+	}
+
+	.intro-buttons {
+		display: flex;
+		gap: 12px;
+		justify-content: center;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 10px 22px;
+		background: transparent;
+		color: var(--accent);
+		font-size: 15px;
+		font-weight: 600;
+		border: 1px solid var(--accent);
+		border-radius: 8px;
+		cursor: pointer;
+		text-decoration: none;
+		transition:
+			background 0.2s,
+			color 0.2s;
+	}
+
+	.btn:hover {
+		background: rgba(255, 255, 255, 0.08);
+		color: #fff;
+	}
+
+	.btn-secondary {
+		border-color: var(--border);
+		color: var(--text-muted);
+	}
+
+	.btn-secondary:hover {
+		background: rgba(255, 255, 255, 0.05);
+		border-color: var(--text-muted);
+		color: var(--text);
+	}
+</style>

@@ -1,0 +1,139 @@
+---
+const features = [
+	{
+		title: "Flexible split layout",
+		description:
+			"Arbitrary horizontal and vertical splits. Arrange tables, queries, and diagrams however you want.",
+		image: "https://picsum.photos/seed/split/800/500?grayscale",
+		alt: "Flexible split layout",
+	},
+	{
+		title: "Multiple connections",
+		description:
+			"Connect to multiple databases at once. Switch between them without closing anything.",
+		image: "https://picsum.photos/seed/conn/800/500?grayscale",
+		alt: "Multiple connections",
+		reverse: true,
+	},
+	{
+		title: "ERD generator",
+		description:
+			"Auto-generated entity-relationship diagrams from your schema. See every table and relationship at a glance.",
+		image: "https://picsum.photos/seed/erd/800/500?grayscale",
+		alt: "ERD generator",
+	},
+	{
+		title: "Visual query builder",
+		description:
+			"Build queries visually. Select tables, join conditions, and filters without writing SQL.",
+		image: "https://picsum.photos/seed/query/800/500?grayscale",
+		alt: "Visual query builder",
+		reverse: true,
+	},
+	{
+		title: "Inline fix",
+		description:
+			"Spot SQL errors as you type. One click to fix. Opt-in, powered by AI.",
+		image: "https://picsum.photos/seed/fix/800/500?grayscale",
+		alt: "Inline fix",
+	},
+	{
+		title: "AI tab completion",
+		description:
+			"Optional autocomplete that suggests columns, tables, and clauses as you type. Enable it when you want it.",
+		image: "https://picsum.photos/seed/ai/800/500?grayscale",
+		alt: "AI tab completion",
+		reverse: true,
+	},
+];
+---
+
+<section class="features" id="features">
+	{
+		features.map((feature) => (
+			<div class:list={["feature-row", { reverse: feature.reverse }]}>
+				<div class="feature-img">
+					<div class="feature-img-placeholder">
+						<img src={feature.image} alt={feature.alt} />
+					</div>
+				</div>
+				<div class="feature-text">
+					<h3>{feature.title}</h3>
+					<p>{feature.description}</p>
+				</div>
+			</div>
+		))
+	}
+</section>
+
+<style>
+	.features {
+		max-width: 1100px;
+		margin: 120px auto 0;
+		padding: 0 24px;
+		display: flex;
+		flex-direction: column;
+		gap: 80px;
+	}
+
+	.feature-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 48px;
+		align-items: start;
+	}
+
+	.feature-row.reverse .feature-text {
+		order: -1;
+	}
+
+	.feature-text h3 {
+		font-size: 24px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		margin-bottom: 12px;
+	}
+
+	.feature-text p {
+		font-size: 16px;
+		color: var(--text-muted);
+		line-height: 1.6;
+	}
+
+	.feature-img {
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		overflow: hidden;
+	}
+
+	.feature-img img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.feature-img-placeholder {
+		aspect-ratio: 16 / 10;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--text-muted);
+		font-size: 13px;
+	}
+
+	@media (max-width: 768px) {
+		.features {
+			margin-top: 80px;
+			gap: 56px;
+		}
+
+		.feature-row {
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+
+		.feature-row.reverse .feature-text {
+			order: 0;
+		}
+	}
+</style>
