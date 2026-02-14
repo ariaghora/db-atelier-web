@@ -4,51 +4,80 @@ const features = [
 		title: "Flexible split layout",
 		description:
 			"Arbitrary horizontal and vertical splits. Arrange tables, queries, and diagrams however you want.",
+		highlights: [
+			"Horizontal and vertical splits",
+			"Resizable panes",
+			"Drag to reorder tabs, within or across panes",
+		],
 		image: "https://picsum.photos/seed/split/800/500?grayscale",
+		video: "https://cdn.dbatelier.app/media/web/tabbing.mp4",
 		alt: "Flexible split layout",
 	},
 	{
 		title: "Multiple connections",
 		description:
 			"Connect to multiple databases at once. Switch between them without closing anything.",
+		highlights: [
+			"PostgreSQL, MySQL, SQLite, and more",
+			"Switch connections instantly",
+			"Saved connection profiles",
+		],
 		image: "https://picsum.photos/seed/conn/800/500?grayscale",
+		video: "https://cdn.dbatelier.app/media/web/multicon.mp4",
 		alt: "Multiple connections",
-		reverse: true,
 	},
 	{
 		title: "ERD generator",
 		description:
 			"Auto-generated entity-relationship diagrams from your schema. See every table and relationship at a glance.",
+		highlights: [
+			"Auto-detect foreign keys and relations",
+			"Interactive pan and zoom",
+			"Export diagrams as images",
+			"Filter by schema or table group",
+		],
 		image: "https://picsum.photos/seed/erd/800/500?grayscale",
+		video: "https://cdn.dbatelier.app/media/web/erdgen.mp4",
 		alt: "ERD generator",
 	},
 	{
 		title: "Visual query builder",
 		description:
 			"Build queries visually. Select tables, join conditions, and filters without writing SQL.",
+		highlights: [
+			"Drag-and-drop table selection",
+			"Visual JOIN builder",
+			"Point-and-click filtering",
+			"Preview generated SQL in real time, one toggle away",
+		],
 		image: "https://picsum.photos/seed/query/800/500?grayscale",
 		alt: "Visual query builder",
-		reverse: true,
+		video: "https://cdn.dbatelier.app/media/web/visual-query.mp4",
 	},
 	{
-		title: "Inline fix",
+		title: "Optional AI tab completion and inline instruction",
 		description:
-			"Spot SQL errors as you type. One click to fix. Opt-in, powered by AI.",
-		image: "https://picsum.photos/seed/fix/800/500?grayscale",
-		alt: "Inline fix",
-	},
-	{
-		title: "AI tab completion",
-		description:
-			"Optional autocomplete that suggests columns, tables, and clauses as you type. Enable it when you want it.",
+			"Autocomplete that suggests columns, tables, and clauses as you type. Enable it when you want it.",
+		highlights: [
+			"Schema-aware suggestions",
+			"Context-sensitive completions",
+			"Inline natural language instructions",
+			"Fully opt-in, disable anytime",
+		],
 		image: "https://picsum.photos/seed/ai/800/500?grayscale",
+		video: "https://cdn.dbatelier.app/media/web/tab-complete.mp4",
 		alt: "AI tab completion",
-		reverse: true,
 	},
 	{
 		title: "Extensible by design",
+		descriptionTag: "Soon",
 		description:
 			"Install extensions to add new database connectors, analytics tools, anomaly detection, and more. Like VS Code, but for databases.",
+		highlights: [
+			"Custom database connectors",
+			"Analytics and visualization plugins",
+			{ text: "Build your own with the SDK", tag: "Planned" },
+		],
 		image: "https://picsum.photos/seed/ext/800/500?grayscale",
 		alt: "Extensible by design",
 	},
@@ -58,39 +87,96 @@ const features = [
 <section class="features" id="features">
 	{
 		features.map((feature) => (
-			<div class:list={["feature-row", { reverse: feature.reverse }]}>
+			<div class="feature-row">
 				<div class="feature-img">
 					<div class="feature-img-placeholder">
-						<img src={feature.image} alt={feature.alt} />
+						{feature.video ? (
+							<video src={feature.video} autoplay loop muted playsinline data-expandable />
+						) : (
+							<img src={feature.image} alt={feature.alt} />
+						)}
 					</div>
 				</div>
 				<div class="feature-text">
 					<h3>{feature.title}</h3>
-					<p>{feature.description}</p>
+					<p>
+						{feature.description}
+						{feature.descriptionTag && <span class="feature-tag">{feature.descriptionTag}</span>}
+					</p>
+					{feature.highlights && (
+						<ul class="feature-highlights">
+							{feature.highlights.map((item) => (
+								<li>
+									{typeof item === "string" ? item : (
+										<>{item.text} <span class="feature-tag">{item.tag}</span></>
+									)}
+								</li>
+							))}
+						</ul>
+					)}
 				</div>
 			</div>
 		))
 	}
 </section>
 
+<dialog id="video-dialog">
+	<button id="dialog-close" aria-label="Close">&times;</button>
+	<video id="dialog-video" autoplay loop muted playsinline></video>
+</dialog>
+
+<script>
+	const dialog = document.getElementById("video-dialog") as HTMLDialogElement;
+	const dialogVideo = document.getElementById("dialog-video") as HTMLVideoElement;
+
+	document.querySelectorAll("video[data-expandable]").forEach((video) => {
+		video.addEventListener("click", () => {
+			dialogVideo.src = (video as HTMLVideoElement).src;
+			dialog.showModal();
+		});
+	});
+
+	document.getElementById("dialog-close")!.addEventListener("click", () => {
+		dialog.close();
+	});
+
+	dialog.addEventListener("click", (e) => {
+		if (e.target === dialog) {
+			dialog.close();
+		}
+	});
+
+	dialog.addEventListener("close", () => {
+		dialogVideo.src = "";
+	});
+</script>
+
 <style>
 	.features {
-		max-width: 1100px;
-		margin: 120px auto 0;
-		padding: 0 24px;
-		display: flex;
-		flex-direction: column;
-		gap: 80px;
+		margin-top: 120px;
+		background: rgba(14, 17, 23, 0.7);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		border-top: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
 	}
 
 	.feature-row {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 48px;
-		align-items: start;
+		align-items: center;
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 64px 24px;
+		border-bottom: 1px solid var(--border);
 	}
 
-	.feature-row.reverse .feature-text {
+	.feature-row:last-child {
+		border-bottom: none;
+	}
+
+	.feature-row:nth-child(even) .feature-text {
 		order: -1;
 	}
 
@@ -101,10 +187,47 @@ const features = [
 		margin-bottom: 12px;
 	}
 
+	.feature-tag {
+		display: inline-block;
+		font-size: 10px;
+		font-weight: 500;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		padding: 1px 6px;
+		margin-left: 6px;
+		vertical-align: middle;
+	}
+
 	.feature-text p {
 		font-size: 16px;
 		color: var(--text-muted);
 		line-height: 1.6;
+	}
+
+	.feature-highlights {
+		list-style: none;
+		padding: 0;
+		margin: 16px 0 0;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.feature-highlights li {
+		font-size: 14px;
+		color: var(--text-muted);
+		padding-left: 20px;
+		position: relative;
+	}
+
+	.feature-highlights li::before {
+		content: "—";
+		position: absolute;
+		left: 0;
+		color: var(--border);
 	}
 
 	.feature-img {
@@ -113,10 +236,19 @@ const features = [
 		overflow: hidden;
 	}
 
-	.feature-img img {
+	.feature-img img,
+	.feature-img video {
 		display: block;
 		width: 100%;
 		height: auto;
+	}
+
+	.feature-img video[data-expandable] {
+		cursor: pointer;
+	}
+
+	.feature-img-placeholder:has(video) {
+		aspect-ratio: 16 / 9;
 	}
 
 	.feature-img-placeholder {
@@ -131,16 +263,65 @@ const features = [
 	@media (max-width: 768px) {
 		.features {
 			margin-top: 80px;
-			gap: 56px;
 		}
 
 		.feature-row {
 			grid-template-columns: 1fr;
 			gap: 24px;
+			padding: 40px 20px;
 		}
 
-		.feature-row.reverse .feature-text {
+		.feature-row:nth-child(even) .feature-text {
 			order: 0;
 		}
+	}
+</style>
+
+<style is:global>
+	#video-dialog {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		margin: 0;
+		padding: 0;
+		border: none;
+		border-radius: var(--radius);
+		background: transparent;
+		max-width: 90vw;
+		max-height: 90vh;
+		overflow: visible;
+		outline: none;
+	}
+
+	#video-dialog::backdrop {
+		background: rgba(0, 0, 0, 0.8);
+		backdrop-filter: blur(4px);
+	}
+
+	#video-dialog video {
+		display: block;
+		max-width: 90vw;
+		max-height: 90vh;
+		border-radius: var(--radius);
+	}
+
+	#dialog-close {
+		position: absolute;
+		top: -36px;
+		right: 0;
+		background: none;
+		border: none;
+		color: #fff;
+		font-size: 24px;
+		cursor: pointer;
+		padding: 4px 8px;
+		line-height: 1;
+		opacity: 0.7;
+		transition: opacity 0.15s;
+	}
+
+	#dialog-close:hover {
+		opacity: 1;
 	}
 </style>
