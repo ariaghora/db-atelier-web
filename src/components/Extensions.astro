@@ -1,0 +1,163 @@
+---
+const extensions = [
+	{
+		name: "DuckDB",
+		description:
+			"Add DuckDB as a connection type. Browse tables, run queries, and generate ERDs — same workflow as any other database.",
+		downloads: {
+			macos: "https://cdn.dbatelier.app/plugins/libdb_atelier_ext_duckdb.dylib",
+			windows: null,
+			linux: null,
+		},
+	},
+];
+---
+
+<section class="extensions">
+	<h2>Extensions</h2>
+	<p class="extensions-subtitle">Add new capabilities to DB Atelier.</p>
+
+	<div class="extensions-grid">
+		{
+			extensions.map((ext) => (
+				<div class="ext-card">
+					<div class="ext-info">
+						<h3 class="ext-name">{ext.name}</h3>
+						<p class="ext-desc">{ext.description}</p>
+					</div>
+					<div class="ext-downloads">
+						{ext.downloads.macos ? (
+							<a href={ext.downloads.macos} class="ext-dl-btn">
+								<img src="/os-mac.svg" width="14" height="14" alt="macOS" />
+								macOS
+							</a>
+						) : (
+							<span class="ext-dl-btn ext-dl-disabled">
+								<img src="/os-mac.svg" width="14" height="14" alt="macOS" />
+								macOS
+							</span>
+						)}
+						{ext.downloads.windows ? (
+							<a href={ext.downloads.windows} class="ext-dl-btn">
+								<img src="/os-windows.svg" width="14" height="14" alt="Windows" />
+								Windows
+							</a>
+						) : (
+							<span class="ext-dl-btn ext-dl-disabled">
+								<img src="/os-windows.svg" width="14" height="14" alt="Windows" />
+								Windows
+							</span>
+						)}
+						{ext.downloads.linux ? (
+							<a href={ext.downloads.linux} class="ext-dl-btn">
+								<img src="/os-linux.svg" width="14" height="14" alt="Linux" />
+								Linux
+							</a>
+						) : (
+							<span class="ext-dl-btn ext-dl-disabled">
+								<img src="/os-linux.svg" width="14" height="14" alt="Linux" />
+								Linux
+							</span>
+						)}
+					</div>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.extensions {
+		text-align: center;
+		max-width: 1100px;
+		margin: 72px auto 0;
+		padding: 0 24px;
+	}
+
+	.extensions h2 {
+		font-size: 24px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		margin-bottom: 8px;
+	}
+
+	.extensions-subtitle {
+		font-size: 16px;
+		color: var(--text-muted);
+		margin-bottom: 40px;
+	}
+
+	.extensions-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+	}
+
+	.ext-card {
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 32px 28px;
+		background: var(--bg-card);
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.ext-name {
+		font-size: 18px;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		margin-bottom: 8px;
+	}
+
+	.ext-desc {
+		font-size: 14px;
+		color: var(--text-muted);
+		line-height: 1.6;
+		margin-bottom: 24px;
+	}
+
+	.ext-downloads {
+		display: flex;
+		gap: 8px;
+	}
+
+	.ext-dl-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 6px 12px;
+		font-size: 13px;
+		font-weight: 500;
+		color: var(--accent);
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		text-decoration: none;
+		transition: background 0.15s, border-color 0.15s;
+	}
+
+	.ext-dl-btn:hover {
+		background: rgba(255, 255, 255, 0.06);
+		border-color: var(--text-muted);
+	}
+
+	.ext-dl-disabled {
+		opacity: 0.3;
+		pointer-events: none;
+	}
+
+	@media (max-width: 768px) {
+		.extensions {
+			margin-top: 48px;
+		}
+
+		.extensions-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.ext-downloads {
+			flex-wrap: wrap;
+		}
+	}
+</style>

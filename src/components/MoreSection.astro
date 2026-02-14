@@ -3,10 +3,18 @@
 
 <section class="more-section">
 	<h3>And more</h3>
-	<p>
-		Command palette, light and dark themes, filter, sort, bulk operations,
-		keyboard shortcuts, and a growing list of features.
-	</p>
+	<ul class="more-list">
+		<li>SSH tunnels</li>
+		<li>SSL connections</li>
+		<li>Schema-aware autocomplete</li>
+		<li>Table editor</li>
+		<li>Command palette</li>
+		<li>Light and dark themes</li>
+		<li>Filter, sort, bulk operations</li>
+		<li>OS keychain for passwords</li>
+		<li>API keys stored locally</li>
+		<li>No telemetry</li>
+	</ul>
 </section>
 
 <style>
@@ -24,16 +32,35 @@
 		margin-bottom: 12px;
 	}
 
-	.more-section p {
-		font-size: 16px;
+	.more-list {
+		list-style: none;
+		padding: 0;
+		margin: 24px auto 0;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 10px 20px;
+		max-width: 640px;
+	}
+
+	.more-list li {
+		font-size: 13px;
 		color: var(--text-muted);
-		max-width: 560px;
-		margin: 0 auto;
+	}
+
+	.more-list li::before {
+		content: "—  ";
+		color: var(--border);
 	}
 
 	@media (max-width: 768px) {
 		.more-section {
 			margin-top: 80px;
+		}
+
+		.more-list {
+			flex-direction: column;
+			gap: 8px;
 		}
 	}
 </style>
