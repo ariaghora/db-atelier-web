@@ -1,0 +1,187 @@
+---
+const categories = {
+	New: "#4ade80",
+	Fixed: "#f87171",
+	Improved: "#60a5fa",
+};
+
+const releases = [
+	{
+		version: "0.5.9",
+		date: "2026-02-15",
+		changes: [
+			{
+				category: "New",
+				items: [
+					"Toggle to move DB password from/to OS keychain/encrypted config file",
+					"Clickable breadcrumb. For some DB like PostgreSQL, users can switch database in the same connection (if there are multiple of them, sharing same credentials)",
+					"Allow setting `base_url` for AI providers",
+				],
+			},
+			{
+				category: "Improved",
+				items: [
+    				"Cmd+B for toggle expand allows keyboard navigation",
+    				"Ctrl+tab/ctrl+shift+tab to cycle through tabs within the active pane",
+    				"Smoother ERD rendering: loading and animated autolayout",
+    				"Allow editing, deleting, and disconnecting connection from connection selector in the main editor without navigating to home screen",
+				],
+			},
+			{
+				category: "Fixed",
+				items: [
+					"Unwanted autocapitalization and possibly autocorrect",
+				],
+			},
+		],
+	},
+	{
+		version: "0.5.7",
+		date: "2026-02-13",
+		changes: [
+			{
+				category: "New",
+				items: [ "Initial closed beta release" ],
+			},
+		],
+	},
+];
+---
+
+<section class="changelog">
+	<h2>Changelog</h2>
+	<p class="changelog-subtitle">What's new in DB Atelier.</p>
+
+	<div class="changelog-entries">
+		{
+			releases.map((release) => (
+				<div class="changelog-entry" id={`v${release.version}`}>
+					<div class="changelog-header">
+						<a href={`#v${release.version}`} class="changelog-version">v{release.version}</a>
+						<span class="changelog-date">{release.date}</span>
+					</div>
+					{release.changes.map((group) => (
+						<div class="changelog-group">
+							<span
+								class="changelog-category"
+								style={`color: ${categories[group.category as keyof typeof categories]}`}
+							>
+								{group.category}
+							</span>
+							<ul class="changelog-items">
+								{group.items.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
+						</div>
+					))}
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.changelog {
+		text-align: center;
+		max-width: 720px;
+		margin: 120px auto 0;
+		padding: 0 24px;
+	}
+
+	.changelog h2 {
+		font-size: 24px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		margin-bottom: 8px;
+	}
+
+	.changelog-subtitle {
+		font-size: 16px;
+		color: var(--text-muted);
+		margin-bottom: 40px;
+	}
+
+	.changelog-entries {
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+		text-align: left;
+	}
+
+	.changelog-entry {
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 28px 32px;
+		background: var(--bg-card);
+	}
+
+	.changelog-header {
+		display: flex;
+		align-items: baseline;
+		gap: 12px;
+		margin-bottom: 20px;
+	}
+
+	.changelog-version {
+		font-size: 18px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: var(--text);
+		text-decoration: none;
+	}
+
+	.changelog-version:hover {
+		text-decoration: underline;
+	}
+
+	.changelog-date {
+		font-size: 13px;
+		color: var(--text-muted);
+	}
+
+	.changelog-group {
+		margin-bottom: 14px;
+	}
+
+	.changelog-group:last-child {
+		margin-bottom: 0;
+	}
+
+	.changelog-category {
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.changelog-items {
+		list-style: none;
+		padding: 0;
+		margin: 6px 0 0;
+	}
+
+	.changelog-items li {
+		font-size: 14px;
+		color: var(--text-muted);
+		padding: 3px 0;
+		display: flex;
+	}
+
+	.changelog-items li::before {
+		content: "—";
+		color: var(--text-muted);
+		flex-shrink: 0;
+		margin-right: 0.5em;
+	}
+
+	@media (max-width: 768px) {
+		.changelog {
+			margin-top: 80px;
+		}
+
+		.changelog-entry {
+			padding: 20px 20px;
+		}
+	}
+</style>
