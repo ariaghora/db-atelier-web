@@ -7,6 +7,26 @@ const categories = {
 
 const releases = [
     {
+		version: "0.6.0",
+		date: "2026-02-15",
+		changes: [
+    		{
+     			category: "New",
+     			items: [
+                    "ERD focus mode — click a node to highlight its connected neighbors as a subgraph",
+                    "ERD find node — Cmd+F to search and jump to any table in the ERD",
+                ],
+    		},
+			{
+				category: "Improved",
+				items: [
+				    "ERD performance — viewport culling and batched schema loading",
+				    "ERD zoom-out capped to prevent memory issues on large schemas",
+				],
+			},
+		],
+	},
+    {
 		version: "0.5.11",
 		date: "2026-02-15",
 		changes: [
