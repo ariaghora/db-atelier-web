@@ -24,25 +24,19 @@
 	fetch("https://cdn.dbatelier.app/releases/latest.json")
 		.then((r) => r.json())
 		.then((data) => {
-			const v = data.version;
-      const downloadSizeVal = data.platforms["darwin-aarch64"].size;
-      console.log(downloadSizeVal);
-      const downloadSizeEl = document.querySelector(".download-size")
-      downloadSizeEl.innerText = `· ${downloadSizeVal} MB`;
-			if (v) {
-				const btn = document.getElementById("download-btn");
-				if (btn) {
-					const cdnUrl = `https://cdn.dbatelier.app/releases/DB Atelier_${v}_aarch64.dmg`;
-					btn.setAttribute(
-						"href",
-						`/app/download?platform=macos&url=${encodeURIComponent(cdnUrl)}`
-					);
-				}
+			const { version, platforms } = data;
+			const sizeEl = document.querySelector(".download-size");
+			const btn = document.getElementById("download-btn");
+
+			if (sizeEl) {
+				sizeEl.textContent = `· ${platforms["darwin-aarch64"].size} MB`;
 			}
 
+			if (version && btn) {
+				const cdnUrl = `https://cdn.dbatelier.app/releases/DB Atelier_${version}_aarch64.dmg`;
+				btn.setAttribute("href", `/app/download?platform=macos&url=${encodeURIComponent(cdnUrl)}`);
+			}
 		});
-
-
 </script>
 
 <style>
