@@ -7,6 +7,33 @@ const categories = {
 
 const releases = [
     {
+		version: "0.6.4",
+		date: "2026-02-17",
+		changes: [
+    		{
+     			category: "New",
+     			items: [
+                    "Popup cell editor for JSON/JSONB/text columns",
+                    "Row focus highlight — click a row or navigate with arrow keys (Up/Down cycles through rows)",
+                    "Keyboard row selection — Space toggles checkbox on focused row",
+                ],
+    		},
+			{
+				category: "Improved",
+				items: [
+				    "Improved table rendering for large table",
+				],
+			},
+			{
+				category: "Fixed",
+				items: [
+				    "Renaming a saved query from the sidebar now updates the tab title immediately",
+				    "Large JSON/JSONB cells no longer cause UI lag",
+				],
+			},
+		],
+	},
+    {
 		version: "0.6.0",
 		date: "2026-02-15",
 		changes: [
