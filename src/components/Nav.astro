@@ -14,6 +14,9 @@ DB Atelier
 
 <style>
 	nav {
+		position: sticky;
+		top: 0;
+		z-index: 100;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -37,6 +40,11 @@ DB Atelier
 		background: var(--bg-card);
 		border: 1px solid var(--border);
 		border-radius: 8px;
+		transition: border-color 0.2s;
+	}
+
+	nav.scrolled .nav-pill {
+		border-color: rgba(255, 255, 255, 0.25);
 	}
 
 	.nav-link {
@@ -64,3 +72,10 @@ DB Atelier
 		}
 	}
 </style>
+
+<script>
+	const nav = document.querySelector('nav');
+	window.addEventListener('scroll', () => {
+		nav?.classList.toggle('scrolled', window.scrollY > 10);
+	});
+</script>

@@ -10,9 +10,8 @@
 	<div class="intro-buttons">
 		<a id="download-btn" href="#download" class="btn">
 			<img src="/os-mac.svg" width="16" height="16" alt="macOS" />
-			Download for macOS (Apple Silicon)
+			Download for macOS (Apple Silicon)<span class="download-size">· 0 MB</span>
 		</a>
-		<a href="/pricing" class="btn btn-secondary">Pricing</a>
 	</div>
 	<div class="platform-note">
 		<img src="/os-windows.svg" width="14" height="14" alt="Windows" />
@@ -26,6 +25,10 @@
 		.then((r) => r.json())
 		.then((data) => {
 			const v = data.version;
+      const downloadSizeVal = data.platforms["darwin-aarch64"].size;
+      console.log(downloadSizeVal);
+      const downloadSizeEl = document.querySelector(".download-size")
+      downloadSizeEl.innerText = `· ${downloadSizeVal} MB`;
 			if (v) {
 				const btn = document.getElementById("download-btn");
 				if (btn) {
@@ -36,6 +39,7 @@
 					);
 				}
 			}
+
 		});
 
 
