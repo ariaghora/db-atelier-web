@@ -10,7 +10,7 @@
 	<div class="intro-buttons">
 		<a id="download-btn" href="#download" class="btn">
 			<img src="/os-mac.svg" width="16" height="16" alt="macOS" />
-			Download for macOS (Apple Silicon) · 13 MB
+			Download for macOS (Apple Silicon)<span class="download-size">· 0 MB</span>
 		</a>
 	</div>
 	<div class="platform-note">
@@ -24,20 +24,19 @@
 	fetch("https://cdn.dbatelier.app/releases/latest.json")
 		.then((r) => r.json())
 		.then((data) => {
-			const v = data.version;
-			if (v) {
-				const btn = document.getElementById("download-btn");
-				if (btn) {
-					const cdnUrl = `https://cdn.dbatelier.app/releases/DB Atelier_${v}_aarch64.dmg`;
-					btn.setAttribute(
-						"href",
-						`/app/download?platform=macos&url=${encodeURIComponent(cdnUrl)}`
-					);
-				}
+			const { version, platforms } = data;
+			const sizeEl = document.querySelector(".download-size");
+			const btn = document.getElementById("download-btn");
+
+			if (sizeEl) {
+				sizeEl.textContent = `· ${platforms["darwin-aarch64"].size}`;
+			}
+
+			if (version && btn) {
+				const cdnUrl = `https://cdn.dbatelier.app/releases/DB Atelier_${version}_aarch64.dmg`;
+				btn.setAttribute("href", `/app/download?platform=macos&url=${encodeURIComponent(cdnUrl)}`);
 			}
 		});
-
-
 </script>
 
 <style>
@@ -110,7 +109,6 @@
 
 		.intro-buttons .btn {
 			justify-content: center;
-			font-size: 14px;
 		}
 	}
 
