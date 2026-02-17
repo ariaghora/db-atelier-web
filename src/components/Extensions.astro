@@ -2,13 +2,22 @@
 const extensions = [
 	{
 		name: "DuckDB",
-		description:
-			"Add DuckDB as a connection type. Browse tables, run queries, and generate ERDs — same workflow as any other database.",
+		description: "DuckDB connector.",
 		downloads: {
 			macos: "https://cdn.dbatelier.app/plugins/libdb_atelier_ext_duckdb.dylib",
 			windows: null,
 			linux: null,
 		},
+	},
+	{
+		name: "Microsoft SQL Server",
+		description: "Microsoft SQL Server connector.",
+		soon: true,
+	},
+	{
+		name: "Redis",
+		description: "Redis connector.",
+		soon: true,
 	},
 ];
 ---
@@ -20,46 +29,50 @@ const extensions = [
 	<div class="extensions-grid">
 		{
 			extensions.map((ext) => (
-				<div class="ext-card">
+				<div class:list={["ext-card", { "ext-card-soon": ext.soon }]}>
 					<div class="ext-info">
 						<h3 class="ext-name">{ext.name}</h3>
 						<p class="ext-desc">{ext.description}</p>
 					</div>
-					<div class="ext-downloads">
-						{ext.downloads.macos ? (
-							<a href={ext.downloads.macos} class="ext-dl-btn">
-								<img src="/os-mac.svg" width="14" height="14" alt="macOS" />
-								macOS
-							</a>
-						) : (
-							<span class="ext-dl-btn ext-dl-disabled">
-								<img src="/os-mac.svg" width="14" height="14" alt="macOS" />
-								macOS
-							</span>
-						)}
-						{ext.downloads.windows ? (
-							<a href={ext.downloads.windows} class="ext-dl-btn">
-								<img src="/os-windows.svg" width="14" height="14" alt="Windows" />
-								Windows
-							</a>
-						) : (
-							<span class="ext-dl-btn ext-dl-disabled">
-								<img src="/os-windows.svg" width="14" height="14" alt="Windows" />
-								Windows
-							</span>
-						)}
-						{ext.downloads.linux ? (
-							<a href={ext.downloads.linux} class="ext-dl-btn">
-								<img src="/os-linux.svg" width="14" height="14" alt="Linux" />
-								Linux
-							</a>
-						) : (
-							<span class="ext-dl-btn ext-dl-disabled">
-								<img src="/os-linux.svg" width="14" height="14" alt="Linux" />
-								Linux
-							</span>
-						)}
-					</div>
+					{ext.soon ? (
+						<span class="ext-soon-badge">Coming Soon</span>
+					) : (
+						<div class="ext-downloads">
+							{ext.downloads.macos ? (
+								<a href={ext.downloads.macos} class="ext-dl-btn">
+									<img src="/os-mac.svg" width="14" height="14" alt="macOS" />
+									macOS
+								</a>
+							) : (
+								<span class="ext-dl-btn ext-dl-disabled">
+									<img src="/os-mac.svg" width="14" height="14" alt="macOS" />
+									macOS
+								</span>
+							)}
+							{ext.downloads.windows ? (
+								<a href={ext.downloads.windows} class="ext-dl-btn">
+									<img src="/os-windows.svg" width="14" height="14" alt="Windows" />
+									Windows
+								</a>
+							) : (
+								<span class="ext-dl-btn ext-dl-disabled">
+									<img src="/os-windows.svg" width="14" height="14" alt="Windows" />
+									Windows
+								</span>
+							)}
+							{ext.downloads.linux ? (
+								<a href={ext.downloads.linux} class="ext-dl-btn">
+									<img src="/os-linux.svg" width="14" height="14" alt="Linux" />
+									Linux
+								</a>
+							) : (
+								<span class="ext-dl-btn ext-dl-disabled">
+									<img src="/os-linux.svg" width="14" height="14" alt="Linux" />
+									Linux
+								</span>
+							)}
+						</div>
+					)}
 				</div>
 			))
 		}
@@ -145,6 +158,16 @@ const extensions = [
 	.ext-dl-disabled {
 		opacity: 0.3;
 		pointer-events: none;
+	}
+
+	.ext-card-soon {
+		opacity: 0.4;
+	}
+
+	.ext-soon-badge {
+		font-size: 13px;
+		font-weight: 500;
+		color: var(--text-muted);
 	}
 
 	@media (max-width: 768px) {
