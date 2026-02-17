@@ -1,0 +1,206 @@
+---
+import TweetCard from "./Tweet";
+
+const tweetIds = [
+  "2022649348748906675",
+  "2022649348748906675",
+  "2022649348748906675",
+  "2022649348748906675",
+  "2022649348748906675",
+  "2022649348748906675",
+];
+---
+
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header">
+    <h2>What people are saying</h2>
+    <p>Hear from developers who use DB Atelier every day.</p>
+  </div>
+  <div class="testimonials-grid" id="testimonials-grid">
+    {tweetIds.map((id) => (
+      <TweetCard id={id} client:load />
+    ))}
+  </div>
+  <div class="testimonials-dots" id="testimonials-dots">
+    {Array.from({ length: Math.ceil(tweetIds.length / 3) }).map((_, i) => (
+      <button class:list={["dot", { active: i === 0 }]} data-page={i} />
+    ))}
+  </div>
+</section>
+
+<script>
+  const grid = document.getElementById("testimonials-grid")!;
+  const dots = document.querySelectorAll<HTMLButtonElement>("#testimonials-dots .dot");
+  const totalPages = dots.length;
+  let currentPage = 0;
+  let autoScrollTimer: ReturnType<typeof setInterval>;
+
+  function scrollToPage(page: number) {
+    const cardWidth = grid.scrollWidth / totalPages;
+    grid.scrollTo({ left: cardWidth * page, behavior: "smooth" });
+  }
+
+  function updateDots() {
+    const scrollLeft = grid.scrollLeft;
+    const pageWidth = grid.scrollWidth / totalPages;
+    const page = Math.round(scrollLeft / pageWidth);
+    currentPage = page;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === page);
+    });
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const page = Number(dot.dataset.page);
+      scrollToPage(page);
+      resetAutoScroll();
+    });
+  });
+
+  grid.addEventListener("scroll", updateDots);
+
+  function autoScroll() {
+    currentPage = (currentPage + 1) % totalPages;
+    scrollToPage(currentPage);
+  }
+
+  function resetAutoScroll() {
+    clearInterval(autoScrollTimer);
+    autoScrollTimer = setInterval(autoScroll, 5000);
+  }
+
+  // Pause on hover
+  grid.addEventListener("mouseenter", () => clearInterval(autoScrollTimer));
+  grid.addEventListener("mouseleave", resetAutoScroll);
+
+  resetAutoScroll();
+</script>
+
+<style>
+  .testimonials {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    overflow: hidden;
+  }
+
+  .testimonials-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .testimonials-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .testimonials-header p {
+    font-size: 16px;
+    color: var(--text-muted);
+  }
+
+  .testimonials-grid {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .testimonials-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .testimonials-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: var(--border);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .dot.active {
+    background: var(--accent-hover);
+    transform: scale(1.25);
+  }
+
+  .dot:hover {
+    background: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .testimonials {
+      padding: 60px 20px;
+    }
+  }
+</style>
+
+<style is:global>
+  .tweet-card {
+    display: flex;
+    justify-content: center;
+    flex: 0 0 calc((100% - 48px) / 3);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  @media (max-width: 768px) {
+    .tweet-card {
+      flex: 0 0 85%;
+    }
+  }
+
+  .tweet-card .react-tweet-theme {
+    --tweet-container-margin: 0;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Hide Follow button & separator */
+  .tweet-card [class*="authorFollow"] {
+    display: none !important;
+  }
+
+  /* Hide X/Twitter brand icon */
+  .tweet-card [class*="brand"] {
+    display: none !important;
+  }
+
+  /* Hide quoted tweet */
+  .tweet-card [class*="quotedTweet"],
+  .tweet-card [class*="quoted-tweet"],
+  .tweet-card article article {
+    display: none !important;
+  }
+
+  /* Hide actions (like, reply, copy link) */
+  .tweet-card [class*="actions"] {
+    display: none !important;
+  }
+
+  /* Hide replies ("Read 1 reply") */
+  .tweet-card [class*="replies"] {
+    display: none !important;
+  }
+
+  /* Hide info icon (ⓘ) but keep the date */
+  .tweet-card [class*="infoLink"] {
+    display: none !important;
+  }
+</style>
