@@ -35,8 +35,17 @@
 			if (version && btn) {
 				const cdnUrl = `https://cdn.dbatelier.app/releases/DB Atelier_${version}_aarch64.dmg`;
 				btn.setAttribute("href", `/app/download?platform=macos&url=${encodeURIComponent(cdnUrl)}`);
-			}
-		});
+
+				btn.addEventListener("click", () => {
+					if (typeof gtag === "function") {
+						gtag("event", "download", {
+							event_category: "engagement",
+							event_label: `macos_aarch64_v${version}`,
+						});
+					}
+				});
+		}
+	});
 </script>
 
 <style>
