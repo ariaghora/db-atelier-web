@@ -56,6 +56,15 @@ const ogImageURL = new URL(ogImage, Astro.site);
 		<meta name="google-site-verification" content="qtGAwC1CJCmSUfJOKyH75ABzjE6pNeTC5ISefqL0K9U" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BKQSYKK75T"></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-BKQSYKK75T');
+		</script>
 	</head>
 	<body>
 		<slot />
