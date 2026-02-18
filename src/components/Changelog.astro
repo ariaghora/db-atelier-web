@@ -7,6 +7,43 @@ const categories = {
 
 const releases = [
     {
+		version: "0.7.1",
+		date: "2026-02-18",
+		changes: [
+    		{
+     			category: "New",
+     			items: [
+                    "MCP Server — let AI agents query your databases via the Model Context Protocol",
+                    "Import data from CSV/JSON files into any table",
+                    "View/Edit Row detail panel — right-click any row to inspect all fields",
+                    "Run selected SQL — select a block in the query editor and run just the selection",
+                    "Start/Stop MCP Server from Cmd+K command palette",
+                    "Running queries and pending changes count badges on bottom panel tabs",
+                    "Functions and saved queries sections in schema browser",
+                ],
+    		},
+			{
+				category: "Improved",
+				items: [
+				    "Pending changes moved to bottom panel for better workflow",
+				    "MCP connections are pooled — parallel agent requests get isolated connections",
+				    "Reliable spinner and table reload when switching databases",
+				    "Schema browser accordion-style layout",
+				],
+			},
+			{
+				category: "Fixed",
+				items: [
+				    "DuckDB no longer hangs when GUI and AI queries run concurrently",
+				    "Database connection leak on MCP server stop and disconnect",
+				    "Postgres metadata queries use simple query protocol (fixes edge cases)",
+				    "Deleting a table now closes its associated tabs",
+				    "MCP button no longer appears after license removal",
+				],
+			},
+		],
+	},
+    {
 		version: "0.6.5",
 		date: "2026-02-17",
 		changes: [
